@@ -31,3 +31,9 @@ npx tsc --init
 ```
 node jsファイルの保存先のパス（例：node dist/index.js)
 ```
+
+# メモ
+- 以下のコマンドを実行しておくと,tsファイルが更新されるたびにjsファイルへのコンパイルが実行される
+```
+npx tsc --watch
+```
