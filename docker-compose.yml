@@ -7,3 +7,21 @@ services:
     tty: true
     volumes:
       - .:/app
+  web:
+    # コンテナ名をwebに指定
+    container_name: web
+    # NginxのDockerfileをビルドする
+    build:
+      # ビルドコンテキストはカレントディレクトリ
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    # ボリュームを指定
+    # ローカルの/staticをコンテナの/staticにマウントする
+    volumes:
+      - ./dist:/app
+    # ローカルの80番ボートをコンテナの80番ポートとつなぐ
+    ports:
+      - "8080:80"
+    # 先にappを起動してからwebを起動する
+    depends_on:
+      - node-dev
