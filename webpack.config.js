@@ -1,46 +1,47 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = {
-    entry: './src/index.js',
-    output:{
-        path: path.resolve(__dirname,'dist'),
-        filename: 'bundle.js'
-    },
-    module: {
-        rules :[
-            {
-                test: /¥.(jsjsx)$/,
-                exclude: /node_modules/,
-                use:{
-                    loader: 'babel-loader'
-                }
-            },
-            {
-                test: /¥.css$/,
-                use: ['style-loader', 'css-loader']
-            }
-        ]
-    },
-    resolve :{
-        extensions: ['.js','.jsx']
-    },
-    plugins :[
-        new HtmlWebpackPlugin({
-            template: './src/index.html'
-        })
+export default {
+  entry: './src/index.js',
+  output: {
+    path: path.resolve(process.cwd(), 'dist'),
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    })
+  ],
+  devServer: {
+    static: [
+      {
+        directory: path.join(process.cwd(), 'dist')
+      },
+      {
+        directory: path.join(process.cwd(), 'public'),
+        publicPath: '/'
+      }
     ],
-    devServer: {
-        static: [
-            {
-                directory: path.join(__dirname,'dist')
-            },
-            {
-                directory: path.join(__dirname, 'public'),
-                publicPath: '/'
-            }
-        ],
-        compress: true,
-        port: 3000
-    }
+    host: '172.20.0.2',
+    compress: true,
+    port: 3000
+  }
 };
